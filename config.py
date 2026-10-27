@@ -8,7 +8,7 @@ import os
 
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(override=True)  # .env wins over system environment variables
 
 # --- LLM ---------------------------------------------------------------------
 LLM_PROVIDER = "openai"          # later: "ollama"

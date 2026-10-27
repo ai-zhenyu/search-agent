@@ -44,3 +44,15 @@ Newest entries at the bottom.
 - **What we tried:** Not yet.
 - **What we measured:** Not yet.
 - **Decision:** See `config.py`: 2 rounds, 3 queries per round, 8 results per query, 5 pages, 6,000 characters per page, 30k tokens per run, 6 agent steps. Revisit after the eval runs.
+
+## D6. Which OpenAI API format (2026-10-26)
+- **Problem:** OpenAI offers both the Chat Completions API and the newer Responses API. We may switch to a local Ollama model later.
+- **Options considered:** Responses API (OpenAI-only features); Chat Completions (Ollama has a compatible endpoint).
+- **What we tried:** One Chat Completions call to gpt-6-luna with reasoning_effort="low".
+- **What we measured:** It worked: 26 input and 26 output tokens, cost ≈ $0.00002.
+- **Decision:** Chat Completions, called only from `core/llm.py::call_llm()`.
+
+## D7. Where API keys are read from (2026-10-26)
+- **Problem:** The OpenAI key was also set as a Windows environment variable, which by default overrides `.env`, so a different key could be used without anyone noticing.
+- **Options considered:** Rely on the environment variable; make `.env` win.
+- **Decision:** `load_dotenv(override=True)`, so `.env` is the single source of truth.
